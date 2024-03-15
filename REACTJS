@@ -1,0 +1,68 @@
+//MOVIELIST.JS
+import React from 'react';
+
+const MovieList = ({ movies, onSelectMovie }) => {
+  return (
+    <ul>
+      {movies.map((movie) => (
+        <li key={movie.id} onClick={() => onSelectMovie(movie.id)}>
+          <img src={movie.poster} alt={movie.title} />
+          <h3>{movie.title}</h3>
+          <p>Release Date: {movie.releaseDate}</p>
+          <p>Average Rating: {movie.averageRating}</p>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+export default MovieList;
+
+MOVIEDETAIL.JS
+import React from 'react';
+
+const MovieDetail = ({ movie }) => {
+  return (
+    <div>
+      <h2>{movie.title}</h2>
+      <img src={movie.poster} alt={movie.title} />
+      <p>Release Date: {movie.releaseDate}</p>
+      <p>Average Rating: {movie.averageRating}</p>
+      <h4>Reviews</h4>
+      {movie.reviews.map((review) => (
+        <div key={review.id}>
+          <p>{review.reviewerName || 'Anonymous'}: {review.rating}/10</p>
+          <p>{review.comments}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default MovieDetail;
+
+//SearchBar.js:
+import React, { useState } from 'react';
+
+const SearchBar = ({ onSearch }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onSearch(searchTerm);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Search for a movie"
+        value={searchTerm}
+        onChange={(event) => setSearchTerm(event.target.value)}
+      />
+      <button type="submit">Search</button>
+    </form>
+  );
+};
+
+export default SearchBar;
